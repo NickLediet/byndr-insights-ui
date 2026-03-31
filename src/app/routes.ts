@@ -8,6 +8,11 @@ import { QueryBuilder } from "./pages/QueryBuilder";
 import { MetagamePage } from "./pages/MetagamePage";
 import { DesignSystem } from "./pages/DesignSystem";
 
+const routerBasename =
+  import.meta.env.BASE_URL !== "/" && import.meta.env.BASE_URL.endsWith("/")
+    ? import.meta.env.BASE_URL.slice(0, -1)
+    : import.meta.env.BASE_URL;
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -22,4 +27,6 @@ export const router = createBrowserRouter([
       { path: "design", Component: DesignSystem },
     ],
   },
-]);
+], {
+  basename: routerBasename,
+});
