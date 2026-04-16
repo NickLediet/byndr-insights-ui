@@ -1,0 +1,103 @@
+name: Sync UI changes to byndr-insights
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: sync-byndr-insights-ui
+  cancel-in-progress: true
+
+jobs:
+  sync-and-open-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout byndr-insights-ui
+        uses: actions/checkout@v4
+        with:
+          path: byndr-insights-ui
+
+      - name: Checkout byndr-insights
+        uses: actions/checkout@v4
+        with:
+          repository: NickLediet/byndr-insights
+          token: ${{ secrets.BYNDR_INSIGHTS_REPO_TOKEN }}
+          path: byndr-insights
+
+      - name: Sync UI files into docs/design-concepts
+        run: |
+          TARGET_DIR="byndr-insights/docs/design-concepts/byndr-insights-ui"
+          mkdir -p "$TARGET_DIR"
+
+          rsync -av --delete \
+            --exclude ".git" \
+            --exclude ".github" \
+            --exclude "node_modules" \
+            --exclude "dist" \
+            "byndr-insights-ui/" "$TARGET_DIR/"
+
+      - name: Open or update sync PR
+        id: create_pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.BYNDR_INSIGHTS_REPO_TOKEN }}
+          path: byndr-insights
+          branch: automation/sync-byndr-insights-ui
+          delete-branch: true
+          commit-message: "chore(design-concepts): sync byndr-insights-ui updates"
+          title: "chore(design-concepts): sync byndr-insights-ui updates"
+          body: |
+            ## Automated byndr-insights-ui sync
+
+            This PR was automatically generated from changes pushed to `main` in `byndr-insights-ui`.
+
+            It updates:
+            - `docs/design-concepts/byndr-insights-ui`
+
+            ## Why this exists
+            Keep design concepts and new UI feature changes visible so implementation work can be planned and tracked quickly.
+
+      - name: Ensure assignment and labels on sync PR
+        if: steps.create_pr.outputs.pull-request-number != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.BYNDR_INSIGHTS_REPO_TOKEN }}
+          script: |
+            const owner = 'NickLediet';
+            const repo = 'byndr-insights';
+            const pull_number = Number('${{ steps.create_pr.outputs.pull-request-number }}');
+            const assignee = 'NickLediet';
+            const labels = [
+              { name: 'design-sync', color: '0366d6', description: 'Automated sync of design concepts from byndr-insights-ui' },
+              { name: 'needs-implementation', color: 'fbca04', description: 'Design or feature update requiring implementation follow-up' },
+              { name: 'ui-update', color: '5319e7', description: 'Includes UI changes from upstream design repo' }
+            ];
+
+            for (const label of labels) {
+              try {
+                await github.rest.issues.getLabel({ owner, repo, name: label.name });
+              } catch (error) {
+                if (error.status === 404) {
+                  await github.rest.issues.createLabel({ owner, repo, ...label });
+                } else {
+                  throw error;
+                }
+              }
+            }
+
+            await github.rest.issues.addAssignees({
+              owner,
+              repo,
+              issue_number: pull_number,
+              assignees: [assignee],
+            });
+
+            await github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: pull_number,
+              labels: labels.map((label) => label.name),
+            });
