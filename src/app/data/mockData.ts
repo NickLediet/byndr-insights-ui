@@ -58,9 +58,9 @@ export interface MarketStat {
 // ─── Card Images (using Unsplash) ───────────────────────────────────────────
 const CARD_IMAGES = {
   dragon: "https://images.unsplash.com/photo-1764264136582-9bc4c5800596?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
-  wizard: "https://images.unsplash.com/photo-1635779389310-fc20d01ce0f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
-  knight: "https://images.unsplash.com/photo-1734122373993-36745ac6b688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
-  phoenix: "https://images.unsplash.com/photo-1669205617241-bf837080affd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
+  wizard: "https://cards.scryfall.io/large/front/2/3/2398892d-28e9-4009-81ec-0d544af79d2b.jpg?1614638829",
+  knight: "https://cards.scryfall.io/large/front/c/8/c8817585-0d32-4d56-9142-0d29512e86a9.jpg?1598304029",
+  phoenix: "https://cards.scryfall.io/large/front/b/0/b0faa7f2-b547-42c4-a810-839da50dadfe.jpg?1559591477",
   forest: "https://images.unsplash.com/photo-1762765018961-3e482e0415b2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
   ruins: "https://images.unsplash.com/photo-1717671996335-2b1812e4f305?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
   cards: "https://images.unsplash.com/photo-1637757969279-c4d028905131?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400",
