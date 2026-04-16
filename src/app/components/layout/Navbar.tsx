@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import {
-  Search, BarChart2, Database, Layers, Swords, Code2,
-  Menu, X, Sparkles, ChevronDown, Bell, User
+  Search, BarChart2, Database, Swords, Code2,
+  Menu, X, Sparkles, Bell, User, TrendingUp,
 } from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "/cards", label: "Card DB", icon: Database },
-  { href: "/analytics", label: "Analytics", icon: BarChart2 },
-  { href: "/query", label: "Query Builder", icon: Code2 },
-  { href: "/metagame", label: "Metagame", icon: Swords },
-  { href: "/design", label: "Design System", icon: Layers },
+  { href: "/insights",  label: "Insights",      icon: TrendingUp },
+  { href: "/cards",     label: "Card DB",        icon: Database   },
+  { href: "/analytics", label: "Analytics",      icon: BarChart2  },
+  { href: "/query",     label: "Query Builder",  icon: Code2      },
+  { href: "/metagame",  label: "Metagame",       icon: Swords     },
 ];
 
 export function Navbar() {

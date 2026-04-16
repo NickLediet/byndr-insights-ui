@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet, Link } from "react-router";
 import { Navbar } from "./Navbar";
 
 export function Root() {
@@ -8,8 +8,8 @@ export function Root() {
       <main>
         <Outlet />
       </main>
-      <footer className="border-t-2 border-black mt-16 bg-[#0A0A0A] text-[#FFFEF0]">
-        <div className="max-w-screen-xl mx-auto px-4 py-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+      <footer className="border-t-2 border-black mt-4 bg-[#0A0A0A] text-[#FFFEF0]">
+        <div className="max-w-screen-xl mx-auto px-4 py-4 grid grid-cols-2 md:grid-cols-4 gap-4">
           <div>
             <div className="text-[#FFE234] font-bold mb-3 text-sm tracking-widest uppercase">Vaultex</div>
             <p className="text-gray-400 text-xs leading-relaxed">Financial intelligence for the trading card market. Built for collectors, investors & competitors.</p>
@@ -21,6 +21,7 @@ export function Root() {
               <li><a href="/analytics" className="hover:text-[#FFE234] transition-colors">Analytics</a></li>
               <li><a href="/query" className="hover:text-[#FFE234] transition-colors">Query Builder</a></li>
               <li><a href="/metagame" className="hover:text-[#FFE234] transition-colors">Metagame</a></li>
+              <li><Link to="/design" className="hover:text-[#FFE234] transition-colors">Design System</Link></li>
             </ul>
           </div>
           <div>

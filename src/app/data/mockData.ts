@@ -290,6 +290,31 @@ export const MOCK_CARDS: MTGCard[] = [
   },
 ];
 
+// ─── Extended Cards (with variants) ─────────────────────────────────────────
+export const EXTENDED_CARDS: MTGCard[] = [
+  ...MOCK_CARDS,
+  ...MOCK_CARDS.map(c => ({
+    ...c,
+    id: c.id + "_b",
+    name: c.name + " (Showcase)",
+    price: parseFloat((c.price * 1.4).toFixed(2)),
+    foilPrice: parseFloat((c.foilPrice * 1.2).toFixed(2)),
+    priceChange: parseFloat((c.priceChange * 0.8).toFixed(2)),
+    priceChangePercent: parseFloat((c.priceChangePercent * 0.8).toFixed(1)),
+  })),
+  ...MOCK_CARDS.map(c => ({
+    ...c,
+    id: c.id + "_c",
+    name: c.name + " (Borderless)",
+    set: "Secret Lair",
+    setCode: "SLD",
+    price: parseFloat((c.price * 2.1).toFixed(2)),
+    foilPrice: parseFloat((c.foilPrice * 1.8).toFixed(2)),
+    priceChange: parseFloat((c.priceChange * 1.3).toFixed(2)),
+    priceChangePercent: parseFloat((c.priceChangePercent * 1.3).toFixed(1)),
+  })),
+];
+
 // ─── Price History ───────────────────────────────────────────────────────────
 export function generatePriceHistory(basePrice: number, days: number = 90): PricePoint[] {
   const history: PricePoint[] = [];
